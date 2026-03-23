@@ -13,8 +13,11 @@ $arrowUp  = [char]0x2B06
 $arrowDn  = [char]0x2B07
 $arrowFl  = [char]0x27A1
 
+# --- Use PHT timezone (UTC+8) for all date calculations ---
+$phtNow = [System.TimeZoneInfo]::ConvertTimeBySystemTimeZoneId([DateTime]::UtcNow, "Singapore Standard Time")
+
 # --- Confidence level based on day of week ---
-$today = (Get-Date).DayOfWeek
+$today = $phtNow.DayOfWeek
 $confidence = switch ($today) {
     "Monday"    { "Low" }
     "Tuesday"   { "Low" }
@@ -26,9 +29,9 @@ $confidence = switch ($today) {
 }
 
 # --- Next Tuesday date ---
-$daysUntilTuesday = (([int][System.DayOfWeek]::Tuesday - [int](Get-Date).DayOfWeek) + 7) % 7
+$daysUntilTuesday = (([int][System.DayOfWeek]::Tuesday - [int]$phtNow.DayOfWeek) + 7) % 7
 if ($daysUntilTuesday -eq 0) { $daysUntilTuesday = 7 }
-$nextTuesday = (Get-Date).AddDays($daysUntilTuesday).ToString("MMM dd, yyyy")
+$nextTuesday = $phtNow.AddDays($daysUntilTuesday).ToString("MMM dd, yyyy")
 
 # --- Scrape latest official DOE adjustment from GMA News ---
 # Fallback: last known official adjustment — update manually each Tuesday
@@ -170,8 +173,8 @@ $reason2     = "USD/PHP: $usdPhp | Peso $pesoDir"
 
 Write-Host "DEBUG >> USD/PHP: $usdPhp | Brent: $brentPrice | Change: $brentChange | EstPerL: $estimatePerL" -ForegroundColor Yellow
 
-$dateLabel = Get-Date -Format "MMM dd, yyyy"
-$timeLabel = Get-Date -Format "hh:mm tt"
+$dateLabel = $phtNow.ToString("MMM dd, yyyy")
+$timeLabel = $phtNow.ToString("hh:mm tt")
 
 $message = @"
 $fuel Borderline Daily Fuel Forecast
