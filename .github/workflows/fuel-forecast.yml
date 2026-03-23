@@ -2,8 +2,7 @@ name: Fuel Forecast Bot
 
 on:
   schedule:
-    # - cron: '0 */2 * * *'  # every 2 hours
-    - cron: '*/5 * * * *'  # every 5 minutes
+    - cron: '50 23 * * *'   # runs 11:50 PM UTC → 7:50 AM PHT
   workflow_dispatch:        # allows manual run
 
 jobs:
