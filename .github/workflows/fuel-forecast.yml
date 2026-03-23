@@ -1,0 +1,20 @@
+name: Fuel Forecast Bot
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'  # every 2 hours
+  workflow_dispatch:        # allows manual run
+
+jobs:
+  send-forecast:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run Fuel Forecast Script
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        shell: pwsh
+        run: ./Send-FuelForecastTelegram.ps1
