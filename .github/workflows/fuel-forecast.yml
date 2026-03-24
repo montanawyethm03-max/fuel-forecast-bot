@@ -2,7 +2,7 @@ name: Fuel Forecast Bot
 
 on:
   schedule:
-    - cron: '* * * * *'   # every minute - testing
+    - cron: '0 */2 * * *'   # every 2 hours UTC
   workflow_dispatch:  
 
 jobs:
