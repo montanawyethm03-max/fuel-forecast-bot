@@ -2,6 +2,7 @@
 # PH Daily Fuel Forecast - dynamic estimate based on Brent crude + USD/PHP
 # Schedule via Windows Task Scheduler (hourly or 3x daily)
 
+
 $botToken = if ($env:TELEGRAM_BOT_TOKEN) { $env:TELEGRAM_BOT_TOKEN } else { "YOUR_BOT_TOKEN_HERE" }
 $chatId   = if ($env:TELEGRAM_CHAT_ID)   { $env:TELEGRAM_CHAT_ID }   else { "@BorderlineDailyFuelForecast" }
 
